@@ -27,40 +27,50 @@
             android:text="Registro de formulario"
             android:textSize="25dp" />
 
-        <Button
+        <EditText
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="Button" />
+            android:hint="name"
+            android:background="@drawable/diseno_texto"
+            android:text="" />
 
-        <Button
+        <EditText
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="Button" />
+            android:hint="last mame"
+            android:background="@drawable/diseno_texto"
+            android:text="" />
 
-        <Button
+        <EditText
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="Button" />
+            android:hint="first name.."
+            android:background="@drawable/diseno_texto"
+            android:text="" />
 
-        <Button
+        <EditText
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="Button" />
+            android:hint="City.."
+            android:background="@drawable/diseno_texto"
+            android:text="" />
 
-        <Button
+        <EditText
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="Button" />
+            android:hint="Company..."
+            android:background="@drawable/diseno_texto"
+            android:text="" />
     </LinearLayout>
 
     <TextView
