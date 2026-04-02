@@ -10,12 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplicationDisenoXml">
+        android:theme="@style/Theme.MyApplicationMaterialDesing">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivityLogin"
             android:exported="false" />
         <activity
-            android:name=".MainActivityInicio"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
