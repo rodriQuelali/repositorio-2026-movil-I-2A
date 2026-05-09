@@ -7,7 +7,7 @@ fun main(){
     ShortArray
     LongArray
     FloatArray
-    DoubleArray
+    DoubleArray = [true, true, false]
     BooleanArray
     CharArray
     */
