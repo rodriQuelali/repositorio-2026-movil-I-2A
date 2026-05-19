@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Aplicaction ui-code examplo</string>
+    <string name="numero1">Numero 1</string>
+    <string name="numero2">Numero 2</string>
+
+    <string name="butoon_suma">Sumar</string>
+    <string name="butoon_resta">Resta</string>
+    <string name="butoon_multiplicacion">Multiplicacion</string>
+    <string name="butoon_division">Division</string>
+</resources>

@@ -1,10 +1,10 @@
 fun main(){
     //funciones..
-    var a = suma(mutableListOf(23,45,56),34)
+    var aaa = mejoradaSuma(mutableListOf(2,4,6,8,11,13,17,105),20)
     //salida: [57, 79, 90]
-    println(a)
+    println(aaa)
 
-    println(sumas(23,45))
+   // println(sumas(23,45))
 
 }
 
@@ -14,12 +14,20 @@ fun main(){
 //tarea para no utilizar la variable nuevalistas ni otra otra varibale, utilizar el a
 fun suma(a: MutableList<Int>, b: Int):MutableList<Int>{
     //a.add(0, 25)
-    val nuevalistas: MutableList<Int> = mutableListOf()
-    a.forEach {
+    //val nuevalistas: MutableList<Int> = mutableListOf()
+    /*a.forEach {
         nuevalistas.add(it+b)
-    }
-    return nuevalistas
+    }*/
+    a.mapIndexed { index, i -> a.set(index, i+b) }
+    return a
 }
+fun mejoradaSuma(a: MutableList<Int>, b: Int):MutableList<Int> {
+    a.mapIndexed { index, i -> a.set(index, i+b) }
+    return a
+}
+
+
+
 
 //procemientos
 //no devule la funcion
