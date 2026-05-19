@@ -1,13 +1,16 @@
 package com.example.myaplicactionui_codeexamplo
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.myaplicactionui_codeexamplo.data.Calculadora
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -35,11 +38,20 @@ class MainActivity : AppCompatActivity() {
 
 
         btnSuma.setOnClickListener {
+            //2.5+45.2 = 47.7
+            //2.5 +20 = 22.5
+            //20+2.5 = 22.5
+
            // parceo de datos
-            val n1= num1.text.toString().toInt()
-            val n2= num2.text.toString().toInt()
-            val res:Int = n1 + n2
-            resul.text = res.toString()
+            val n1= num1.text.toString()
+            val n2= num2.text.toString()
+            val calculadora = Calculadora(n1,n2)
+            val res: String = calculadora.suma()
+            resul.text = res
+
+            //instamcia de la clase calculadora
+            //Calculadra(2,5)
+            //
         }
 
         btnResta.setOnClickListener {
@@ -65,11 +77,12 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
-
-
         //funciones como un collback
+    }
+    //otra manera para capturar el evento click del boton
+    //en sus propiedaes llamar seleccionar onclick para llamar al metodo  eventoOnclick()
+    fun eventoOnclick(view: View){
+        Toast.makeText(this, "Hola mundo", Toast.LENGTH_SHORT).show()
     }
 
     //funciones o procedimientos

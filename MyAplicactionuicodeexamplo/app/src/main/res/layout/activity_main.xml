@@ -36,7 +36,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txt1"
-            android:inputType="number"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -59,7 +59,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txt2"
-            android:inputType="number"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
