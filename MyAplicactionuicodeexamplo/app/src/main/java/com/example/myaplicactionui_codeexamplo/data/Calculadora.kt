@@ -14,7 +14,7 @@ class Calculadora (var num1: String, var num2: String){
         if(this.num1.contains(",")){
             //realizar el parceo de datos
             //tiene coma, se tiene operar con float
-            
+
             //"3,4" a float -- como ?
             //"3.5" a flot -- si puede realizar el parceo
             return "tiene coma"
