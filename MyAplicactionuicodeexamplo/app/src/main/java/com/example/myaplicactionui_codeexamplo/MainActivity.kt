@@ -3,7 +3,6 @@ package com.example.myaplicactionui_codeexamplo
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myaplicactionui_codeexamplo.data.Calculadora
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +24,24 @@ class MainActivity : AppCompatActivity() {
         }
         //clase R, puente entre xml y la clase KT
         //realizando casting
-        val num1 = findViewById<TextInputEditText>(R.id.txt1)
         //creando el objeto.
-        val num2: TextInputEditText = findViewById(R.id.txt2)
+        val txtEntra: TextInputEditText = findViewById(R.id.txtEntrada)
+        val tvView = findViewById<TextView>(R.id.tvView)
+
+        //todos los numeros
+        val btn1 = findViewById<Button>(R.id.btn1)
+        val btn2 = findViewById<Button>(R.id.btn2)
+        val btn3 = findViewById<Button>(R.id.btn3)
+        val btn4 = findViewById<Button>(R.id.btn4)
+        val btn5 = findViewById<Button>(R.id.btn5)
+        val btn6 = findViewById<Button>(R.id.btn6)
+        val btn7 = findViewById<Button>(R.id.btn7)
+        val btn8 = findViewById<Button>(R.id.btn8)
+        val btn9 = findViewById<Button>(R.id.btn9)
+        val btn0 = findViewById<Button>(R.id.btn0)
+        val btnComa = findViewById<Button>(R.id.btnComa)
+        val btnIgual = findViewById<Button>(R.id.btnIgual)
+
         val btnSuma = findViewById<Button>(R.id.btnSuma)
         val resul = findViewById<TextView>(R.id.tvResultado)
 
@@ -36,45 +49,114 @@ class MainActivity : AppCompatActivity() {
         val btnMulti = findViewById<Button>(R.id.btnMulti)
         val btnDivision = findViewById<Button>(R.id.btnDivision)
 
+        //valor axiliar
+        //1, 12
+        var auxASignacion:String = ""
+        var operadores:String = ""
+
+        var n1:String = ""
+        var n2:String = ""
+
+
+        //asignacion ade valor
+        btn1.setOnClickListener {
+            auxASignacion += "1"
+            txtEntra.setText(auxASignacion)
+        }
+        btn2.setOnClickListener {
+            auxASignacion += "2"
+            txtEntra.setText(auxASignacion)
+        }
+
+        btn3.setOnClickListener {
+            auxASignacion += "3"
+            txtEntra.setText(auxASignacion)
+        }
+
+        btn4.setOnClickListener {
+            auxASignacion += "4"
+            txtEntra.setText(auxASignacion)
+        }
+        btn5.setOnClickListener {
+            auxASignacion += "5"
+            txtEntra.setText(auxASignacion)
+        }
+        btn6.setOnClickListener {
+            auxASignacion += "6"
+            txtEntra.setText(auxASignacion)
+        }
+        btn7.setOnClickListener {
+            auxASignacion += "7"
+            txtEntra.setText(auxASignacion)
+        }
+        btn8.setOnClickListener {
+            auxASignacion += "8"
+            txtEntra.setText(auxASignacion)
+        }
+        btn9.setOnClickListener {
+            auxASignacion += "9"
+            txtEntra.setText(auxASignacion)
+        }
+        btn0.setOnClickListener {
+            auxASignacion += "0"
+            txtEntra.setText(auxASignacion)
+        }
+        btnComa.setOnClickListener {
+            auxASignacion += ","
+            txtEntra.setText(auxASignacion)
+        }
+
+
 
         btnSuma.setOnClickListener {
-            //2.5+45.2 = 47.7
-            //2.5 +20 = 22.5
-            //20+2.5 = 22.5
+            tvView.setText(auxASignacion + "+")
+            n1 = auxASignacion
+            operadores = "+"
+            //operaciones
+            auxASignacion = ""
+            txtEntra.setText("")
 
-           // parceo de datos
-            val n1= num1.text.toString()
-            val n2= num2.text.toString()
-            val calculadora = Calculadora(n1,n2)
-            val res: String = calculadora.suma()
-            resul.text = res
-
-            //instamcia de la clase calculadora
-            //Calculadra(2,5)
-            //
         }
 
         btnResta.setOnClickListener {
             // parceo de datos
-            resul.text = (num1.text.toString().toInt() -num2.text.toString().toInt()).toString()
+            //resul.text = (num1.text.toString().toInt() -num2.text.toString().toInt()).toString()
         }
 
         btnMulti.setOnClickListener {
             // parceo de datos
-            resul.text = (num1.text.toString().toInt() * num2.text.toString().toInt()).toString()
+            //resul.text = (num1.text.toString().toInt() * num2.text.toString().toInt()).toString()
         }
 
         btnDivision.setOnClickListener {
             // parceo de datos
-            val n1= num1.text.toString().toInt()
+            /*val n1= num1.text.toString().toInt()
             val n2= num2.text.toString().toInt()
             if(n2!=0){
                 val res:Int = n1 / n2
                 resul.text = res.toString()
             }else{
                 resul.text = "No se puede dividir por cero"
-            }
+            }*/
 
+        }
+
+        btnIgual.setOnClickListener {
+            if(operadores == "+"){
+                //suma
+
+                n2 = auxASignacion
+                tvView.setText(n1 + "+" + n2)
+                var calculadora = Calculadora(n1,n2)
+                var res: String = calculadora.suma()
+                resul.text = res
+
+                //borra todo
+
+                auxASignacion = ""
+                txtEntra.setText("")
+            }
+            operadores
         }
 
         //funciones como un collback
