@@ -20,7 +20,7 @@ class Calculadora (var num1: String, var num2: String){
         var validar = validarDatos()
         var n1 = validar[0].toFloat()
         var n2 = validar[1].toFloat()
-        var resulFinal = convertirDatos((n1 + n2).toString()).toString()
+        var resulFinal = convertirDatos((n1 + n2).toString())
 
         return resulFinal.toString()
         //return this.num1.toString().toFloat() + this.num2.toString().toFloat()
@@ -52,11 +52,15 @@ class Calculadora (var num1: String, var num2: String){
 
         //soloucionar el bug. de 4 + 5 = 9.0, no se tien que dar eso.
 
-        if(a.contains(".")){
-            return a.toFloat()
+        if(a.toFloat() % 1 == 0f){
+            val aux = a.toFloat()
+            return aux.toInt()
         }
-        return a.toInt()
+        return a.toFloat()
     }
+
+    //tarea de 09-06-2026, crear una funcion de convertir de . a ,
+    // para elr resultado final, si es float.
 
 
     //desde los metodos sin el constructor
