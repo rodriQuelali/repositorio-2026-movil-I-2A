@@ -13,6 +13,7 @@ import com.example.myaplicactionui_codeexamplo.data.Calculadora
 import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
+    var auxASignacion:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         //valor axiliar
         //1, 12
-        var auxASignacion:String = ""
+
         var operadores:String = ""
 
         var n1:String = ""
@@ -102,7 +103,8 @@ class MainActivity : AppCompatActivity() {
             txtEntra.setText(auxASignacion)
         }
         btnComa.setOnClickListener {
-            auxASignacion += ","
+            //validar si ya existe mas de una coma
+            validarComaUnaSola(auxASignacion)
             txtEntra.setText(auxASignacion)
         }
 
@@ -144,23 +146,30 @@ class MainActivity : AppCompatActivity() {
         btnIgual.setOnClickListener {
             if(operadores == "+"){
                 //suma
-
                 n2 = auxASignacion
                 tvView.setText(n1 + "+" + n2)
                 var calculadora = Calculadora(n1,n2)
                 var res: String = calculadora.suma()
                 resul.text = res
-
                 //borra todo
-
                 auxASignacion = ""
                 txtEntra.setText("")
             }
             operadores
         }
-
         //funciones como un collback
     }
+
+    //funcion de validar coma
+    fun validarComaUnaSola(a:String){
+        var contador = a.count{it == ','}
+        if(contador > 0){
+            Toast.makeText(this, "No se puede ingresar mas de una coma", Toast.LENGTH_SHORT).show()
+        }else{
+            auxASignacion += ","
+        }
+    }
+
     //otra manera para capturar el evento click del boton
     //en sus propiedaes llamar seleccionar onclick para llamar al metodo  eventoOnclick()
     fun eventoOnclick(view: View){
