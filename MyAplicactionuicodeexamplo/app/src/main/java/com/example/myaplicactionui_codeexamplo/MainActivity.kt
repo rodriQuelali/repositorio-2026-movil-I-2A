@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.myaplicactionui_codeexamplo.data.Calculadora
+import com.example.myaplicactionui_codeexamplo.data.Calculadora2
 import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
@@ -121,8 +122,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnResta.setOnClickListener {
-            // parceo de datos
-            //resul.text = (num1.text.toString().toInt() -num2.text.toString().toInt()).toString()
+            tvView.setText(auxASignacion + "-")
+            n1 = auxASignacion
+            operadores = "-"
+            //operaciones
+            auxASignacion = ""
+            txtEntra.setText("")
         }
 
         btnMulti.setOnClickListener {
@@ -144,13 +149,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnIgual.setOnClickListener {
+            //when
+            n2 = auxASignacion
             if(operadores == "+"){
                 //suma
-                n2 = auxASignacion
                 tvView.setText(n1 + "+" + n2)
                 var calculadora = Calculadora(n1,n2)
-                var res: String = calculadora.suma()
-                resul.text = res
+                resul.text = calculadora.suma()
+                //borra todo
+                auxASignacion = ""
+                txtEntra.setText("")
+            }else if(operadores == "-"){
+                //resta
+                tvView.setText(n1 + "-" + n2)
+                resul.text = Calculadora2.suma(n1,n2)
                 //borra todo
                 auxASignacion = ""
                 txtEntra.setText("")

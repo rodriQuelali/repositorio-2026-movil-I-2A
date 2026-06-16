@@ -32,5 +32,28 @@ class Calculadora (
         return formatoLatam.convertirDatos(re.toString()).toString()
     }
 
+    fun resta(): String{
+        var validar = formatoLatam.validarDatos(num1, num2)
+        var n1 = validar[0].toFloat()
+        var n2 = validar[1].toFloat()
+        var re = n1 - n2
+
+        return formatoLatam.convertirDatos(re.toString()).toString()
+    }
+
 }
+
+//clase con static
+ class Calculadora2{
+     companion object{
+         fun suma(num1: String, num2: String, formatoLatam: FormatoLatam = FormatoLatam()): String{
+             var validar = formatoLatam.validarDatos(num1, num2)
+             var n1 = validar[0].toFloat()
+             var n2 = validar[1].toFloat()
+             var re = n1 + n2
+
+             return formatoLatam.convertirDatos(re.toString()).toString()
+         }
+     }
+ }
 
