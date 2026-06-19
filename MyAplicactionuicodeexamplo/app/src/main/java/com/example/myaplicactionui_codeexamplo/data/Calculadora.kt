@@ -43,6 +43,10 @@ class Calculadora (
 
 }
 
+
+
+
+
 //clase con static
  class Calculadora2{
      companion object{

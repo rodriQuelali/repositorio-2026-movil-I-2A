@@ -150,19 +150,19 @@ class MainActivity : AppCompatActivity() {
 
         btnIgual.setOnClickListener {
             //when
+            //division y multiplicacion.
             n2 = auxASignacion
             if(operadores == "+"){
                 //suma
                 tvView.setText(n1 + "+" + n2)
-                var calculadora = Calculadora(n1,n2)
-                resul.text = calculadora.suma()
+                resul.text = Calculadora(n1,n2).suma()
                 //borra todo
                 auxASignacion = ""
                 txtEntra.setText("")
             }else if(operadores == "-"){
                 //resta
                 tvView.setText(n1 + "-" + n2)
-                resul.text = Calculadora2.suma(n1,n2)
+                resul.text = Calculadora(n1,n2).resta()
                 //borra todo
                 auxASignacion = ""
                 txtEntra.setText("")
