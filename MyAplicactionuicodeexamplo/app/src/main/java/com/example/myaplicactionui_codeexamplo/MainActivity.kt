@@ -3,6 +3,7 @@ package com.example.myaplicactionui_codeexamplo
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -50,6 +51,22 @@ class MainActivity : AppCompatActivity() {
         val btnResta = findViewById<Button>(R.id.btnResta)
         val btnMulti = findViewById<Button>(R.id.btnMulti)
         val btnDivision = findViewById<Button>(R.id.btnDivision)
+
+        val rbLatam = findViewById<RadioButton>(R.id.rbLatam)
+        val rbUsa = findViewById<RadioButton>(R.id.rbUsa)
+
+        rbLatam.setOnClickListener {
+            if(rbLatam.isChecked){
+                //operaciones con formato latam
+            }
+        }
+
+        rbUsa.setOnClickListener {
+            if(rbUsa.isChecked){
+                //operaciones con formato latam
+            }
+        }
+
 
         //valor axiliar
         //1, 12
