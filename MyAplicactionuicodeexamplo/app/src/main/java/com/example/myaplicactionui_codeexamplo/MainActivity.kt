@@ -16,6 +16,8 @@ import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
     var auxASignacion:String = ""
+    lateinit var rbLatam: RadioButton
+    lateinit var rbUsa: RadioButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         val btnMulti = findViewById<Button>(R.id.btnMulti)
         val btnDivision = findViewById<Button>(R.id.btnDivision)
 
-        val rbLatam = findViewById<RadioButton>(R.id.rbLatam)
-        val rbUsa = findViewById<RadioButton>(R.id.rbUsa)
+        rbLatam = findViewById<RadioButton>(R.id.rbLatam)
+        rbUsa = findViewById<RadioButton>(R.id.rbUsa)
 
         rbLatam.setOnClickListener {
             if(rbLatam.isChecked){
@@ -191,12 +193,22 @@ class MainActivity : AppCompatActivity() {
 
     //funcion de validar coma
     fun validarComaUnaSola(a:String){
-        var contador = a.count{it == ','}
-        if(contador > 0){
-            Toast.makeText(this, "No se puede ingresar mas de una coma", Toast.LENGTH_SHORT).show()
-        }else{
-            auxASignacion += ","
+        if(rbLatam.isChecked){
+            var contador = a.count{it == ','}
+            if(contador > 0){
+                Toast.makeText(this, "No se puede ingresar mas de una coma", Toast.LENGTH_SHORT).show()
+            }else{
+                auxASignacion += ","
+            }
+        }else if(rbUsa.isChecked){
+            var contador = a.count{it == '.'}
+            if(contador > 0){
+                Toast.makeText(this, "No se puede ingresar mas de una coma", Toast.LENGTH_SHORT).show()
+            }else{
+                auxASignacion += "."
+            }
         }
+
     }
 
     //otra manera para capturar el evento click del boton
