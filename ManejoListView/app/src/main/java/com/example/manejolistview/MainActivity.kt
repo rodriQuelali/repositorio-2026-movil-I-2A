@@ -2,6 +2,8 @@ package com.example.manejolistview
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.manejolistview.data.Pais
 
 class MainActivity : AppCompatActivity() {
+    //varibles globales
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,30 +25,37 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val paisesList: MutableList<Pais> = mutableListOf()
+        val nombresPaises: MutableList<String> = mutableListOf()
+        val adaptador1 = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nombresPaises)
 
-
-        val tv1=findViewById<TextView>(R.id.tv1)
-        val list1=findViewById<ListView>(R.id.list1)
-
-        //pop
-        //push
-
-        val paisListObejct: MutableList<String> = mutableListOf()
-        val pais: Pais = Pais("BOLIVA")
-        val chile: Pais = Pais("CHILE")
-        paisListObejct.add(pais.getNombre())
-        paisListObejct.add(chile.getNombre())
-
-
-
-
-
-        val paises = arrayOf( "Argentina", "Chile", "Paraguay", "Bolivia", "Peru", "Ecuador", "Brasil", "Colombia", "Venezuela", "Uruguay")
-        var habitantes = arrayOf(40_000_000, 17_000_000, 6_500_000, 10_000_000, 30_000_000, 14_000_000, 183_000_000, 44_000_000, 31_000_000, 3_500_000)
-        val adaptador1 = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, paisListObejct)
+        val tv1 = findViewById<TextView>(R.id.tv1)
+        val list1 = findViewById<ListView>(R.id.list1)
         list1.adapter = adaptador1
-        list1.setOnItemClickListener { adapterView, view, i, l ->
-            tv1.text = "Población de: ${habitantes[i]}"
+
+        val btnAgregarPais = findViewById<Button>(R.id.btnAgregarPais)
+        val txtPais = findViewById<EditText>(R.id.txtPais)
+        val txtHabitantes = findViewById<EditText>(R.id.txtHabitantes)
+
+        btnAgregarPais.setOnClickListener {
+            val nombre = txtPais.text.toString()
+            val habStr = txtHabitantes.text.toString()
+
+            if (nombre.isNotEmpty() && habStr.isNotEmpty()) {
+                val nuevoPais = Pais(nombre, habStr.toLong())
+                paisesList.add(nuevoPais)
+                nombresPaises.add(nuevoPais.getNombre())
+                adaptador1.notifyDataSetChanged()
+
+                // Limpiar campos
+                txtPais.text.clear()
+                txtHabitantes.text.clear()
+            }
+        }
+
+        list1.setOnItemClickListener { _, _, i, _ ->
+            val p = paisesList[i]
+            tv1.text = "Población de ${p.getNombre()}: ${p.getHabitantes()} habitantes"
         }
     }
 }

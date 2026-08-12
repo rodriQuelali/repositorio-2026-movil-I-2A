@@ -1,10 +1,9 @@
 package com.example.manejolistview.data
 
 class Pais (
-    private val nombre:String,
-    //private val habitantes:Int
+    private val nombre: String,
+    private val habitantes: Long
 ){
-    //metodos...
-    fun getNombre():String = nombre
-    //fun getHabitantes():Int = habitantes
+    fun getNombre(): String = nombre
+    fun getHabitantes(): Long = habitantes
 }
