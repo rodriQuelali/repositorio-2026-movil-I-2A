@@ -1,0 +1,35 @@
+package com.example.myapplicationrecirclerview
+
+import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplicationrecirclerview.model.Producto
+import com.example.myapplicationrecirclerview.viewmodel.ProductoAdapter
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        //codigo
+        val listaOb = mutableListOf<Producto>(
+            Producto("laptop", 1500, 10),
+            Producto("Monitor", 500, 5)
+        )
+
+        val rclPro = findViewById<RecyclerView>(R.id.rclProducto)
+        rclPro.layoutManager= LinearLayoutManager(this)
+        val adapterProducto = ProductoAdapter(listaOb)
+        rclPro.adapter = adapterProducto
+    }
+}
