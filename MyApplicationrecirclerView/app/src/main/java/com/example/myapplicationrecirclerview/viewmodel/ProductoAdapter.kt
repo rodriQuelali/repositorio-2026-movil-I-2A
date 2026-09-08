@@ -26,9 +26,9 @@ class ProductoAdapter(
         position: Int
     ) {
         //val nombre = listPro[position]
-        holder.tvN.text = listPro[position].getNombre()
-        holder.tvP.text = listPro[position].getPrecio().toString()
-        holder.tvS.text = listPro[position].getStock().toString()
+        holder.tvN.text = "Nombre: ${listPro[position].getNombre()}"
+        holder.tvP.text = "Precio: ${listPro[position].getPrecio().toString()}"
+        holder.tvS.text = "Stock: ${listPro[position].getStock().toString()}"
     }
 
     override fun getItemCount(): Int = listPro.size
