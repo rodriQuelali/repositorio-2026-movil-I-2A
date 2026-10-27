@@ -45,7 +45,8 @@ class MainActivity : AppCompatActivity() {
             val producto = Producto(
                 binding.txtNombreP.text.toString(),
                 binding.txtPrecio.text.toString().toInt(),
-                binding.txtStock.text.toString().toInt()
+                binding.txtStock.text.toString().toInt(),
+                "ho"
             )
             listaOb.add(producto)
             binding.rclProducto.adapter = adapterProducto

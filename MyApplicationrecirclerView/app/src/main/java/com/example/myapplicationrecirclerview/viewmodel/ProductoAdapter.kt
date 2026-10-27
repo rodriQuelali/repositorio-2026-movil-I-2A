@@ -11,6 +11,7 @@ import com.example.myapplicationrecirclerview.model.Producto
 class ProductoAdapter(
     private val listPro: List<Producto>
 ): RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder>() {
+    
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
