@@ -8,6 +8,10 @@ import androidx.room.Update
 import com.example.myapplicationmvvmsqlite.data.local.entity.ClienteEntity
 import kotlinx.coroutines.flow.Flow
 
+
+/**
+ * Si se necesita realizar otra consulta o un metodo de la
+ * tabla cliente se realiza aqui.*/
 @Dao
 interface ClienteDao {
 
