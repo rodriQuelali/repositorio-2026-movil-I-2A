@@ -5,7 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplicationmvvmsqlite.AppViewModelProvider
 import com.example.myapplicationmvvmsqlite.R
+import com.example.myapplicationmvvmsqlite.databinding.FragmentDeudaListBinding
+import kotlinx.coroutines.launch
+import kotlin.getValue
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +32,47 @@ class DeudaListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+
+
+    private var _b: FragmentDeudaListBinding? = null
+    private val b get() = _b!!
+    private val vm: DeudaViewModel by activityViewModels { AppViewModelProvider.Factory}
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _b = FragmentDeudaListBinding.bind(view)
+
+        val adapter = DeudaAdapter { item ->
+            findNavController().navigate(
+                R.id.action_deudas_to_detalle, bundleOf("deudaId" to item.deuda.idDeuda)
+            )
+        }
+        b.recycler.layoutManager = LinearLayoutManager(requireContext())
+        b.recycler.adapter = adapter
+
+        b.chipGroup.setOnCheckedStateChangeListener { _, ids ->
+            vm.setFiltro(when (ids.firstOrNull()) {
+                R.id.chipVencidas -> FiltroDeuda.VENCIDAS
+                R.id.chipCobradas -> FiltroDeuda.COBRADAS
+                R.id.chipTodas -> FiltroDeuda.TODAS
+                else -> FiltroDeuda.PENDIENTES
+            })
+        }
+        b.fabAdd.setOnClickListener { findNavController().navigate(R.id.action_deudas_to_form) }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { vm.deudas.collect {
+                    adapter.submitList(it); b.txtVacio.isVisible = it.isEmpty()
+                } }
+                launch { vm.totalPendiente.collect {
+                    b.txtTotal.text = "Por cobrar:${it.toMoneda()}"
+                } }
+            }
+        }
+    }
+
+    override fun onDestroyView() { _b = null; super.onDestroyView() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,11 +1,26 @@
 package com.example.myapplicationmvvmsqlite.ui.deuda
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplicationmvvmsqlite.AppViewModelProvider
 import com.example.myapplicationmvvmsqlite.R
+import com.example.myapplicationmvvmsqlite.data.local.relation.DeudaConCliente
+import com.example.myapplicationmvvmsqlite.databinding.FragmentDeudaDetailBinding
+import com.example.myapplicationmvvmsqlite.databinding.FragmentDeudaListBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +37,58 @@ class DeudaDetailFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _b: FragmentDeudaDetailBinding? = null
+    private val b get() = _b!!
+    private val vm: DeudaViewModel by activityViewModels { AppViewModelProvider.Factory }
+    private val args: DeudaDetailFragmentArgs by navArgs()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _b = FragmentDeudaDetailBinding.bind(view)
+        vm.cargarDetalle(args.deudaId)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { vm.detalle.collect { item -> item?.let { pintar(it) } } }
+                launch { vm.events.collect { if (it == UiEvent.Saved) findNavController().popBackStack() } }
+            }
+        }
+    }
+
+    private fun pintar(item: DeudaConCliente) {
+        val d = item.deuda
+        val c = item.cliente
+
+        b.imgCliente.load(c.fotoPath)
+        b.txtCliente.text = c.nombreCompleto
+        b.txtMonto.text = d.monto.toMoneda()
+        b.txtFechas.text = "Prestado:${d.fechaPrestamo.toFecha()}\nCobro:${d.fechaCobro.toFecha()}"
+        b.btnCobrada.isVisible = !d.pagado
+
+        b.btnCobrada.setOnClickListener { vm.marcarPagada(d) }
+        b.btnEliminar.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Eliminar deuda").setMessage("Esta acción no se puede deshacer.")
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("Eliminar") { _, _ -> vm.eliminar(d) }
+                .show()
+        }
+
+        // 📞 Llamar (sin permiso: solo abre el marcador)
+        b.btnLlamar.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:${c.celular}")))
+        }
+
+        // 🗺 Cómo llegar al domicilio guardado con GPS
+        b.btnMapa.isEnabled = c.latitud != null
+        b.btnMapa.setOnClickListener {
+            val uri = Uri.parse("geo:${c.latitud},${c.longitud}?q=${c.latitud},${c.longitud}(${Uri.encode(c.nombreCompleto)})")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            if (intent.resolveActivity(requireContext().packageManager) != null) startActivity(intent)
+            else toast("No hay una app de mapas instalada")
+        }
+    }
+
+    override fun onDestroyView() { _b = null; super.onDestroyView() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

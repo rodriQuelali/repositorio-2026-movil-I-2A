@@ -5,7 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.example.myapplicationmvvmsqlite.AppViewModelProvider
 import com.example.myapplicationmvvmsqlite.R
+import com.example.myapplicationmvvmsqlite.databinding.FragmentLoginBinding
+import com.example.myapplicationmvvmsqlite.ui.UiEvent
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +32,10 @@ class LoginFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _b: FragmentLoginBinding? = null
+    private val b get() = _b!!
+    private val vm: AuthViewModel by viewModels { AppViewModelProvider.Factory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -29,6 +43,36 @@ class LoginFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _b = FragmentLoginBinding.bind(view)
+
+        b.btnLogin.setOnClickListener {
+            val correo = b.edtCorreo.text.toString()
+            val pass = b.edtPass.text.toString()
+            if (correo.isBlank() || pass.isBlank()) {
+                Toast.makeText("Completa todos los campos", Toast.LENGTH_SHORT).show(); return@setOnClickListener
+            }
+            vm.login(correo, pass)
+        }
+        b.txtRegistro.setOnClickListener {
+            findNavController().navigate(R.id.action_login_to_registro)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                vm.events.collect {
+                    when (it) {
+                        UiEvent.Saved -> findNavController().navigate(R.id.action_login_to_clientes)
+                        is UiEvent.Message -> toast(it.text)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() { _b = null; super.onDestroyView() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    app:startDestination="@id/loginFragment">
 
+    <fragment android:id="@+id/loginFragment"
+        android:name="com.example.myapplicationmvvmsqlite.ui.auth.LoginFragment">
+        <action android:id="@+id/action_login_to_clientes"
+            app:destination="@id/clienteListFragment"
+            app:popUpTo="@id/loginFragment" app:popUpToInclusive="true" />
+        <action android:id="@+id/action_login_to_registro"
+            app:destination="@id/registroFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/registroFragment"
+        android:name="com.example.myapplicationmvvmsqlite.ui.auth.RegistroFragment" />
+
+    <fragment android:id="@+id/clienteListFragment"
+        android:name="com.example.myapplicationmvvmsqlite.ui.cliente.ClienteListFragment"
+        android:label="Clientes">
+        <action android:id="@+id/action_clientes_to_form"
+            app:destination="@id/clienteFormFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/clienteFormFragment"
+        android:name="com.example.myapplicationmvvmsqlite.ui.cliente.ClienteFormFragment"
+        android:label="Cliente">
+        <argument android:name="clienteId" app:argType="long" android:defaultValue="-1L" />
+    </fragment>
+
+    <fragment android:id="@+id/deudaListFragment"
+        android:name="com.example.myapplicationmvvmsqlite.ui.deuda.DeudaListFragment"
+        android:label="Deudas">
+        <action android:id="@+id/action_deudas_to_form"
+            app:destination="@id/deudaFormFragment" />
+        <action android:id="@+id/action_deudas_to_detalle"
+            app:destination="@id/deudaDetailFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/deudaFormFragment"
+        android:name="com.example.myapplicationmvvmsqlite.ui.deuda.DeudaFormFragment"
+        android:label="Nueva deuda" />
+
+    <fragment android:id="@+id/deudaDetailFragment"
+        android:name="com.example.myapplicationmvvmsqlite.ui.deuda.DeudaDetailFragment"
+        android:label="Detalle">
+        <argument android:name="deudaId" app:argType="long" />
+    </fragment>
 </navigation>
